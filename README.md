@@ -5,7 +5,7 @@ Turn your name into an extremely unreadable JS expression.
 ```js
 import unreadable from '@hkh12/unreadable';
 
-unreadable('hi') // A valid but unreadable JavaScript expression
+unreadable('hi') // '(((""+Math)[+!!{}+!!{}+!!{}+!!{}+!!{}+!!{}+!!{}+!!{}+!!{}+!!{}+!!{}])+(((typeof ("")[+[]]))[+!!{}+!!{}+!!{}+!!{}+!!{}]))'
 eval(unreadable('hi')) // 'hi'
 unreadable('Hello') // It only accepts a-z (lowercased), 0-9, and spaces
 ```
