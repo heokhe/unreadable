@@ -1,2 +1,2 @@
 # unreadable
-Turn your name into a extremely unreadable experssion.
+Turn your name into an extremely unreadable JS expression.
