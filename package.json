@@ -1,5 +1,5 @@
 {
-  "name": "unreadable",
+  "name": "@hkh12/unreadable",
   "version": "1.0.0",
   "description": "Turn your name into an extremely unreadable JS expression.",
   "type": "module",
