@@ -51,7 +51,7 @@ export default function unreadable(string) {
     throw new Error('unreadable only accepts strings of a-z (lowercased), 0-9 and spaces.');
   }
   return `(${string.split('').map(letter => {
-    if (l === ' ') return '" "';
+    if (letter === ' ') return '" "';
     let l = LETTERS[letter];
     if (!l) {
       // Then it's definitely a digit.
