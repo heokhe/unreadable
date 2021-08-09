@@ -6,16 +6,18 @@ const SPACE = '" "'
 const INFINITY = `${EMPTY}${ONE}/${ZERO}` // "" + 0 / 1 === "Infinity"
 
 const wrap = thing => `(${thing})`
-const number = n => wrap(n === 0 ? ZERO : ONE.repeat(n))
-const at = (thing, index) => `(${thing})[${number(index - 1)}]`
+const digit = n => n === 0 ? ZERO : ONE.repeat(n)
+// i don't like zero-based indexes
+const at = (thing, index) => `(${thing})[${digit(index - 1)}]`
+const safeDigit = n => wrap(`''+(${digit(n)})`)
 const typeOf = thing => wrap(`typeof ${thing}`)
 const functionName = fn => wrap(`${fn.name}[${NAME}]`)
 
-const NAN = `+{}+${EMPTY}`;
-const STRING = typeOf(EMPTY);
-const NUMBER = typeOf(ZERO);
+const NAN = `+{}+${EMPTY}`; // "NaN"
+const STRING = typeOf(EMPTY); // "string"
+const NUMBER = typeOf(ZERO); // "number"
 const UNDEFINED = typeOf(at(EMPTY, 1)); // ""[0] === undefined
-const OBJECT = typeOf('{}');
+const OBJECT = typeOf('{}'); // "object"
 
 const LETTERS = {
   a: at(NAN, 2),
@@ -43,16 +45,18 @@ const LETTERS = {
   w: at(functionName(hasOwnProperty), 5),
   x: at(functionName(Proxy), 4),
   y: at(INFINITY, 8),
-  0: number(0),
-  1: number(1),
-  2: number(2),
-  3: number(3),
-  4: number(4),
-  5: number(5),
-  6: number(6),
-  7: number(7),
-  8: number(8),
-  9: number(9)
+  z: at(wrap(`''.fontsize[${NAME}]`), 7),
+  0: safeDigit(0),
+  1: safeDigit(1),
+  2: safeDigit(2),
+  3: safeDigit(3),
+  4: safeDigit(4),
+  5: safeDigit(5),
+  6: safeDigit(6),
+  7: safeDigit(7),
+  8: safeDigit(8),
+  9: safeDigit(9),
+  ' ': SPACE
 };
 
 /**
@@ -64,9 +68,7 @@ export default function unreadable(input) {
   let output = ''
   for (let i = 0; i < input.length; i++) {
     const char = input[i];
-    if (char === ' ') {
-      output += SPACE;
-    } else if (char in LETTERS) {
+    if (char in LETTERS) {
       output += LETTERS[char];
     } else {
       throw new Error(`unknown character "${char}"; unreadable currently supports a-z, 0-9 and spaces`)
